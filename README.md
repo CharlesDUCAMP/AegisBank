@@ -1,6 +1,6 @@
 # **Aegis Bank — Compte Créateurs**
 
-**Landing page** réalisée dans le cadre du projet web (**Q1**).
+**Landing page** réalisée dans le cadre du cours de conception web.
 
 ---
 
