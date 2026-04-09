@@ -1,78 +1,101 @@
 /* =========================================
-   1. RESET & BASE
+   1. RÉINITIALISATION & BASE
    ========================================= */
-/* Réinitialisation des marges par défaut des navigateurs */
 * {
-    box-sizing: border-box; /* Inclut le padding et les bordures dans la taille totale de l'élément */
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
 body {
-    font-family: 'Inter', sans-serif; /* Police principale, très lisible */
-    min-height: 100vh; /* S'assure que le corps prend au moins toute la hauteur de l'écran */      
-    display: flex; /* Permet de structurer la page verticalement */         
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;      
+    display: flex;          
     flex-direction: column; 
-    /* Dégradé radial simulant une lumière douce venant du haut (style Twitch) */
     background: radial-gradient(circle at top, #1f1b2e 0%, #0E0E10 50%);
-    color: #EFEFF1; /* Blanc cassé pour réduire la fatigue visuelle sur fond sombre */
+    color: #EFEFF1;
 }
 
-/* Animation de "respiration" lumineuse pour la carte promotionnelle */
 @keyframes pulseGlow {
     0% { box-shadow: 0 0 20px rgba(145, 70, 255, 0.15), inset 0 0 10px rgba(145, 70, 255, 0.05); }
     100% { box-shadow: 0 0 35px rgba(145, 70, 255, 0.35), inset 0 0 20px rgba(145, 70, 255, 0.15); }
 }
 
 /* =========================================
-   2. HEADER (En-tête)
+   2. EN-TÊTE (HEADER) - CORRECTION RESPONSIVE
    ========================================= */
 .header {
-    background-color: rgba(24, 24, 27, 0.85); /* Fond semi-transparent */
-    backdrop-filter: blur(12px); /* Effet "verre dépoli" (Glassmorphism) */
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Séparation subtile en bas */
-    position: sticky; /* L'en-tête reste accroché en haut lors du défilement */
+    background-color: rgba(24, 24, 27, 0.85);
+    backdrop-filter: blur(12px);
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: sticky;
     top: 0;
-    z-index: 100; /* S'assure que l'en-tête passe toujours par-dessus le reste du contenu */
+    z-index: 100;
 }
 
-/* Conteneur principal de la navigation divisé en 3 parties égales */
 .header__nav {
     display: flex;
-    align-items: center; /* Centre verticalement le contenu */
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Permet le passage à la ligne si nécessaire */
     padding: 0 15px;
+    gap: 10px;
 }
 
-/* Les zones gauche et droite prennent la même largeur pour centrer parfaitement le logo */
-.header__nav-left,
-.header__nav-right {
-    flex: 1; 
+/* Zone gauche (Burger) */
+.header__nav-left {
+    flex: 0 0 auto; /* Ne grandit pas, garde sa taille */
     display: flex;
     align-items: center;
 }
 
-.header__nav-left {
-    justify-content: flex-start; /* Plaque le bouton burger à gauche */
-}
-
-.header__nav-right {
-    justify-content: flex-end; /* Plaque les boutons d'action à droite */
-    gap: 8px; /* Espace entre les boutons "Se connecter" et "S'inscrire" */
-}
-
+/* Zone centre (Logo) */
 .header__nav-center {
+    flex: 1; /* Prend l'espace disponible pour centrer */
     display: flex;
     justify-content: center;
+    order: 2; /* Position par défaut */
 }
 
-/* Bouton du menu de navigation mobile */
+/* Zone droite (Boutons) */
+.header__nav-right {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    order: 3;
+}
+
+/* AJUSTEMENT POUR ÉCRANS MOBILES (Smartphone classique) */
+@media (max-width: 550px) {
+    .header__nav {
+        justify-content: space-between;
+    }
+
+    /* Le logo se décale un peu pour laisser la place au burger */
+    .header__nav-center {
+        justify-content: flex-end; 
+        padding-right: 10px;
+    }
+
+    /* Les boutons passent en dessous et se centrent */
+    .header__nav-right {
+        flex: 1 0 100%; /* Force la largeur à 100% pour passer à la ligne */
+        justify-content: center;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05); /* Petite séparation visuelle */
+        margin-top: 5px;
+    }
+}
+
+/* --- ÉLÉMENTS DU HEADER --- */
 .header__burger {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 4px; /* Espace entre les lignes du burger */
+    gap: 4px;
     width: 35px;
     height: 35px;
     background-color: transparent;
@@ -80,103 +103,67 @@ body {
     cursor: pointer;
 }
 
-/* Les lignes du burger deviennent violettes au survol de la souris */
-.header__burger:hover .header__burger-line {
-    background-color: #9146FF;
-}
-
-/* Ligne individuelle du bouton burger */
 .header__burger-line {
-    width: 25px;
+    width: 24px;
     height: 2px;
     background-color: #EFEFF1;
-    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease; /* Transitions douces pour l'animation */
+    transition: all 0.3s ease;
 }
 
-/* --- ANIMATION BURGER VERS CROIX (Quand le menu est ouvert) --- */
-.header__burger.is-active .header__burger-line:nth-child(1) {
-    transform: translateY(6px) rotate(45deg); /* Baisse et pivote la ligne du haut */
-    background-color: #9146FF;
-}
-.header__burger.is-active .header__burger-line:nth-child(2) {
-    opacity: 0; /* Fait disparaître la ligne du milieu */
-}
-.header__burger.is-active .header__burger-line:nth-child(3) {
-    transform: translateY(-6px) rotate(-45deg); /* Monte et pivote la ligne du bas */
-    background-color: #9146FF;
-}
+.header__burger.is-active .header__burger-line:nth-child(1) { transform: translateY(6px) rotate(45deg); background-color: #9146FF; }
+.header__burger.is-active .header__burger-line:nth-child(2) { opacity: 0; }
+.header__burger.is-active .header__burger-line:nth-child(3) { transform: translateY(-6px) rotate(-45deg); background-color: #9146FF; }
 
-/* Style du Logo */
 .header__logo {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #9146FF; /* Violet signature */
+    background-color: #9146FF;
     border-radius: 6px;
-    padding: 4px 8px;
-    text-decoration: none; /* Enlève le soulignement natif des liens */
+    padding: 5px 10px;
+    text-decoration: none;
     color: #fff;
-    line-height: 0.9; /* Rapproche les deux mots du logo */
+    line-height: 0.9;
 }
 
-.header__logo-text {
-    font-weight: 700;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
+.header__logo-text { font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
 
-/* --- BOUTONS D'ACTION (Se connecter / S'inscrire) --- */
 .header__btn {
     text-decoration: none;
     color: #EFEFF1;
-    background-color: #303032; /* Gris foncé, bouton secondaire */
-    padding: 8px 10px;
+    background-color: #303032;
+    padding: 8px 12px;
     border-radius: 6px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
-    white-space: nowrap; /* Empêche le texte du bouton de passer à la ligne */
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
-.header__btn--dark {
-    background-color: #9146FF; /* Bouton principal d'appel à l'action (CTA) */
-    color: #fff;
-}
+.header__btn--dark { background-color: #9146FF; color: #fff; }
+.header__btn:hover { background-color: #464649; }
+.header__btn--dark:hover { background-color: #772CE8; }
 
-/* Effets au survol des boutons */
-.header__btn:hover {
-    background-color: #464649;
-}
-
-.header__btn--dark:hover {
-    background-color: #772CE8; /* Violet légèrement plus sombre pour le contraste */
-}
-
-/* --- MENU DÉROULANT (Tiroir mobile / desktop) --- */
+/* --- MENU DROPDOWN --- */
 .header__menu {
     position: absolute;
-    top: 100%; /* S'accroche exactement sous la barre de navigation */
+    top: 100%;
     left: 0;
-    width: 280px; /* Largeur fixe pour faire un panneau latéral */
+    width: 280px; 
     background-color: rgba(24, 24, 27, 0.95);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     border-right: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     border-bottom-right-radius: 12px;
     display: flex;
     flex-direction: column;
-    max-height: 0; /* Totalement replié par défaut (invisible) */
-    overflow: hidden; /* Masque le contenu qui dépasse quand le menu est fermé */
-    transition: max-height 0.4s ease, padding 0.4s ease; /* Animation d'ouverture façon accordéon */
-    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5); /* Ombre portée à droite et en bas */
+    max-height: 0; 
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* Classe ajoutée via JavaScript pour ouvrir le menu */
-.header__menu.is-active {
-    max-height: 300px; 
-    padding: 10px 0;
-}
+.header__menu.is-active { max-height: 350px; padding: 10px 0; }
 
 .header__menu-link {
     color: #EFEFF1;
@@ -185,298 +172,112 @@ body {
     font-weight: 600;
     font-size: 15px;
     transition: all 0.2s ease;
-    border-left: 3px solid transparent; /* Prépare l'espace pour la bordure violette au survol */
+    border-left: 3px solid transparent;
 }
 
 .header__menu-link:hover {
-    background-color: rgba(145, 70, 255, 0.1); /* Fond légèrement violacé */
+    background-color: rgba(145, 70, 255, 0.1);
     color: #9146FF;
-    border-left: 3px solid #9146FF; /* Fait apparaître une barre violette à gauche */
-    padding-left: 25px; /* Décale le texte vers la droite pour un effet dynamique */
+    border-left: 3px solid #9146FF;
+    padding-left: 25px;
 }
 
 /* =========================================
-   3. MAIN CONTENT (Contenu Principal)
+   3. SECTION HÉRO
    ========================================= */
-.main {
-    padding: 40px 20px;
-    flex: 1; /* Prend tout l'espace disponible, ce qui repousse le footer tout en bas */
-}
+.main { padding: 40px 20px; flex: 1; }
 
 .hero {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centre tous les éléments horizontalement */
+    align-items: center;
     text-align: center;
-    gap: 40px; /* Espace vertical généreux entre chaque élément de la section */
-    max-width: 500px; /* Limite la largeur pour garder un texte lisible */
-    margin: 0 auto; /* Centre le bloc entier dans la page */
+    gap: 40px; 
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-/* --- CARTE PROMOTIONNELLE --- */
 .hero__promo-card {
     width: 100%;
-    /* Dégradé de fond transparent vers sombre */
     background: linear-gradient(135deg, rgba(145, 70, 255, 0.15) 0%, rgba(24, 24, 27, 0.8) 100%);
     backdrop-filter: blur(5px);
-    border: 1px solid rgba(145, 70, 255, 0.5); /* Bordure lumineuse */
+    border: 1px solid rgba(145, 70, 255, 0.5);
     border-radius: 12px; 
-    padding: 20px 25px;
+    padding: 20px;
     font-size: 15px;
     font-weight: 700; 
     color: #fff; 
-    animation: pulseGlow 2.5s infinite alternate; /* Appelle l'animation définie plus haut */
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transition super fluide */
-    cursor: default; 
+    animation: pulseGlow 2.5s infinite alternate;
 }
 
-/* Effet 3D au survol de la carte */
-.hero__promo-card:hover {
-    transform: translateY(-5px) scale(1.02); /* Soulève et agrandit légèrement */
-    border-color: #b891ff; 
-    /* Force un effet néon très puissant */
-    box-shadow: 0 0 50px rgba(145, 70, 255, 0.5), inset 0 0 30px rgba(145, 70, 255, 0.3) !important;
-}
-
-.hero__promo-card p {
-    margin: 0;
-    line-height: 1.4;
-}
-
-/* --- TITRE PRINCIPAL --- */
 .hero__title {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 800;
     line-height: 1.2;
-    letter-spacing: -0.5px;
-    /* Applique un dégradé métallique au texte au lieu d'une couleur unie */
     background: linear-gradient(to right, #ffffff, #ADADB8);
-    -webkit-background-clip: text; /* Découpe le fond selon la forme du texte */
-    -webkit-text-fill-color: transparent; /* Rend la couleur de base transparente pour voir le fond */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
 }
 
-.hero__description {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #ADADB8; /* Gris secondaire pour hiérarchiser l'information */
-    max-width: 90%;
-}
+.hero__description { font-size: 15px; line-height: 1.6; color: #ADADB8; }
 
-/* --- BOUTON PRINCIPAL (TÉLÉCHARGER) --- */
 .hero__app-link {
     display: inline-block;
     width: 100%;
     max-width: 300px;
-    background: linear-gradient(135deg, #9146FF 0%, #6014df 100%); /* Dégradé violet riche */
+    background: linear-gradient(135deg, #9146FF 0%, #6014df 100%); 
     color: #fff; 
     padding: 18px 24px;
     border-radius: 12px;
     font-size: 16px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
     text-decoration: none;
-    box-shadow: 0 8px 20px rgba(145, 70, 255, 0.25); /* Ombre colorée (glow) */
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+    box-shadow: 0 8px 20px rgba(145, 70, 255, 0.25); 
+    transition: all 0.3s ease;
 }
 
-.hero__app-link:hover {
-    background: linear-gradient(135deg, #a361ff 0%, #772CE8 100%); 
-    transform: translateY(-4px); /* Donne l'impression de flotter vers l'utilisateur */
-    box-shadow: 0 12px 30px rgba(145, 70, 255, 0.45); 
-}
-
-.hero__app-link:active {
-    transform: translateY(1px); /* S'enfonce physiquement lors du clic */
-    box-shadow: 0 2px 10px rgba(145, 70, 255, 0.2); 
-}
+.hero__app-link:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(145, 70, 255, 0.45); }
 
 /* =========================================
-   4. FOOTER (Pied de page)
+   4. PIED DE PAGE (FOOTER)
    ========================================= */
 .footer {
-    background-color: #18181B; /* Fond de surface sombre */
-    border-top: 1px solid #303032; /* Ligne de délimitation avec le contenu */
-    padding: 40px 20px 20px; 
-    margin-top: auto; /* Pousse le footer en bas si la page est courte */
+    background-color: #18181B;
+    border-top: 1px solid #303032;
+    padding: 40px 20px; 
     display: flex;
     flex-direction: column;
-    gap: 35px; /* Espacement global entre les blocs internes du footer */
+    gap: 30px; 
 }
 
-/* Conteneur des colonnes de texte */
-.footer__content {
-    display: flex;
-    flex-direction: row; 
+.footer__content { 
+    display: flex; 
+    gap: 20px; 
     text-align: left; 
-    align-items: stretch; /* S'assure que toutes les colonnes font la même hauteur (pour les bordures) */
 }
 
-.footer__section {
-    flex: 1; /* Chaque colonne prend exactement 1/3 de la largeur */
-    padding: 0 10px; 
-    border-right: 1px solid #303032; /* Séparateur vertical entre les colonnes */
-}
+.footer__section { flex: 1; border-right: 1px solid #303032; padding-right: 15px; }
+.footer__section:last-child { border-right: none; }
 
-/* On enlève la marge interne gauche du premier et le trait droit du dernier pour l'esthétique */
-.footer__section:first-child {
-    padding-left: 0;
-}
-.footer__section:last-child {
-    border-right: none;
-    padding-right: 0;
-}
+.footer__title { font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 10px; }
+.footer__text { font-size: 11px; color: #ADADB8; line-height: 1.5; }
 
-.footer__title {
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    color: #EFEFF1;
-}
+.footer__socials { display: flex; justify-content: center; gap: 30px; }
+.footer__icon { width: 24px; height: 24px; fill: #EFEFF1; transition: 0.3s; }
+.footer__social-link:hover .footer__icon { fill: #9146FF; transform: translateY(-3px); }
 
-.footer__text {
-    font-size: 11px;
-    color: #ADADB8;
-    line-height: 1.4; /* Espace l'interligne pour plus de lisibilité en petits caractères */
-}
-
-/* Zone des icônes réseaux sociaux */
-.footer__socials {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 25px; 
-    margin-top: 20px; 
-}
-
-.footer__social-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-}
-
-.footer__icon {
-    width: 24px;
-    height: 24px;
-    fill: #EFEFF1; /* Change la couleur de base de l'icône SVG (blanc cassé) */
-    transition: fill 0.3s ease, transform 0.3s ease; 
-}
-
-.footer__social-link:hover .footer__icon {
-    fill: #9146FF; /* Le SVG devient violet */
-    transform: translateY(-3px); /* Petit bond vers le haut au survol */
-}
-
-/* Liens légaux et copyright tout en bas */
-.footer__legal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    border-top: 1px solid #303032; /* Ligne de démarcation fine */
-    padding-top: 20px;
-}
-
-.footer__legal-links {
-    display: flex;
-    flex-wrap: wrap; /* Autorise les liens à passer à la ligne sur de petits écrans */
-    justify-content: center;
-    gap: 15px;
-}
-
-.footer__legal-link {
-    font-size: 11px;
-    color: #ADADB8;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.footer__legal-link:hover {
-    color: #9146FF;
-    text-decoration: underline; 
-}
-
-.footer__copyright {
-    font-size: 11px;
-    color: #ADADB8;
-}
+.footer__legal { display: flex; flex-direction: column; align-items: center; gap: 15px; border-top: 1px solid #303032; padding-top: 20px; }
+.footer__legal-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+.footer__legal-link { font-size: 11px; color: #ADADB8; text-decoration: none; }
+.footer__copyright { font-size: 11px; color: #ADADB8; }
 
 /* =========================================
-   5. RESPONSIVE DESIGN (Ultra-petits écrans)
+   6. RESPONSIVE LARGE (Desktop)
    ========================================= */
-/* Règles appliquées UNIQUEMENT si l'écran fait 400px de large ou moins (ex: vieux iPhone) */
-@media (max-width: 400px) {
-    /* L'en-tête s'adapte en passant sur 2 lignes */
-    .header__nav {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    .header__nav-left,
-    .header__nav-center {
-        flex: auto; /* Lève la restriction des blocs égaux */
-    }
-
-    .header__nav-center {
-        justify-content: flex-end; /* Pousse le logo à droite sur la 1ère ligne */
-    }
-
-    /* Les boutons passent sur une nouvelle ligne, centrés */
-    .header__nav-right {
-        flex: 1 1 100%; 
-        justify-content: center; 
-        padding-top: 10px;
-    }
-
-    /* Le footer s'empile verticalement car il n'y a plus la place pour 3 colonnes */
-    .footer__content {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .footer__section {
-        border-right: none; /* Supprime les barres verticales... */
-        border-bottom: 1px solid #303032; /* ... pour les remplacer par des barres horizontales */
-        padding: 0 0 15px 0; 
-        text-align: center; /* Centre le texte, plus naturel en disposition colonne unique */
-    }
-
-    .footer__section:last-child {
-        border-bottom: none;
-        padding-bottom: 0;
-    }
-}
-
-/* =========================================
-   6. RESPONSIVE DESIGN (Tablettes & Desktop)
-   ========================================= */
-/* Règles appliquées UNIQUEMENT si l'écran est plus grand que 768px (Tablettes horizontales, Ordinateurs) */
 @media (min-width: 768px) {
-    
-    /* Écarte davantage les éléments pour utiliser l'espace gagné */
-    .header__nav-right {
-        gap: 15px; 
-    }
-
-    /* Agrandit les boutons pour un meilleur confort de clic à la souris */
-    .header__btn {
-        font-size: 14px;
-        padding: 10px 20px;
-    }
-
-    .header__logo-text {
-        font-size: 18px;
-    }
-
-    /* Le titre devient imposant pour habiller l'écran */
-    .hero__title {
-        font-size: 46px;
-    }
-    
-    /* Écarte les icônes de réseaux sociaux */
-    .footer__socials {
-        gap: 40px;
-    }
+    .header__nav { padding: 0 30px; }
+    .header__btn { font-size: 14px; padding: 10px 20px; }
+    .header__logo-text { font-size: 18px; }
+    .hero__title { font-size: 56px; }
 }
