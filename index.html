@@ -3,57 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aegis Bank</title>
+    <title>Aegis Bank | Accueil</title>
+    
+    <!-- Importation de la police Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Liaison vers le fichier CSS externe -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="header">
-    <div class="header__nav">
-        
-        <button class="header__burger" aria-label="Menu">
-            <span class="header__burger-line"></span>
-            <span class="header__burger-line"></span>
-            <span class="header__burger-line"></span>
-        </button>
 
-        <a href="#" class="header__logo">
-            <span class="header__logo-text">AEGIS</span>
-            <span class="header__logo-text">BANK</span>
-        </a>
+    <!-- BARRE DE NAVIGATION (HEADER) -->
+    <header class="header">
+        <div class="header__nav">
+            
+            <!-- Zone Gauche : Menu Burger -->
+            <div class="header__nav-left">
+                <button class="header__burger" aria-label="Ouvrir le menu">
+                    <span class="header__burger-line"></span>
+                    <span class="header__burger-line"></span>
+                    <span class="header__burger-line"></span>
+                </button>
+            </div>
 
-        <div class="header__actions">
-            <a href="#" class="header__btn">Se connecter</a>
-            <a href="#" class="header__btn header__btn--dark">S'inscrire</a>
+            <!-- Zone Centre : Logo -->
+            <div class="header__nav-center">
+                <a href="#" class="header__logo">
+                    <span class="header__logo-text">AEGIS</span>
+                    <span class="header__logo-text">BANK</span>
+                </a>
+            </div>
+
+            <!-- Zone Droite : Boutons d'accès -->
+            <div class="header__nav-right">
+                <a href="#" class="header__btn">Se connecter</a>
+                <a href="#" class="header__btn header__btn--dark">S'inscrire</a>
+            </div>
+
         </div>
 
-    </div>
-</header>
+        <!-- Menu latéral déroulant (Dropdown) -->
+        <nav class="header__menu" id="mobileMenu">
+            <a href="#" class="header__menu-link">Accueil</a>
+            <a href="#" class="header__menu-link">Comptes Créateurs</a>
+            <a href="#" class="header__menu-link">Financements</a>
+            <a href="#" class="header__menu-link">Notre Éthique</a>
+        </nav>
+    </header>
 
-<main class="main">
+    <!-- CONTENU PRINCIPAL -->
+    <main class="main">
+        
+        <section class="hero">
+            
+            <!-- Carte promotionnelle animée -->
+            <aside class="hero__promo-card">
+                <p>✨ Offre exclusive de lancement : 20 € offerts durant tout le mois de mars 2026 !</p>
+            </aside>
+
+            <!-- Titre et description -->
+            <h1 class="hero__title">La banque éthique et transparente</h1>
+            
+            <p class="hero__description">
+                Gérez vos revenus de créateur en toute transparence, sans exploitation de vos données ni frais cachés.
+            </p>
+
+            <!-- Bouton d'appel à l'action (CTA) -->
+            <a href="#" class="hero__app-link">
+                Téléchargez l’app
+            </a>
+
+        </section>
+
+    </main>
+
+    <!-- PIED DE PAGE (FOOTER) -->
+    <footer class="footer">
+        
+        <!-- Sections d'information en colonnes -->
+        <div class="footer__content">
+            <div class="footer__section">
+                <h3 class="footer__title">Solutions Créateurs</h3>
+                <p class="footer__text">Des outils bancaires sur-mesure pour gérer vos revenus de plateforme et automatiser votre comptabilité.</p>
+            </div>
+            
+            <div class="footer__section">
+                <h3 class="footer__title">Financements</h3>
+                <p class="footer__text">Obtenez des avances sur vos contrats de sponsoring et lancez vos futurs projets sans attendre.</p>
+            </div>
+            
+            <div class="footer__section">
+                <h3 class="footer__title">Tarifs</h3>
+                <p class="footer__text">Une tarification transparente et éthique. Payez uniquement pour les services que vous utilisez.</p>
+            </div>
+        </div>
+
+        <!-- Réseaux Sociaux -->
+        <div class="footer__socials">
+            <a href="#" class="footer__social-link" aria-label="Telegram">
+                <svg class="footer__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            </a>
+
+            <a href="#" class="footer__social-link" aria-label="Mastodon">
+                <svg class="footer__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.268 5.313c-.35-2.228-2.618-3.616-2.618-3.616C17.58.637 14.973.32 12 .313h-.01c-2.972.007-5.58.324-8.65 1.384s-2.268 1.388-2.618 3.616c-.205 1.304-.326 2.864-.326 4.51v.125c.007 2.166.02 4.484.58 6.55.516 1.905 2.19 3.013 4.295 3.308 2.083.292 4.07.135 5.568-.184 0 0 .914-.236 2.05-.694v-2.316s-1.815.545-3.48.57c-1.79.026-3.79-.19-4.22-1.94-.038-.155-.074-.326-.107-.504 3.864 1.054 8.01 1.25 12.017.535 2.502-.446 4.417-1.488 5.378-2.67 1.066-1.308 1.196-3.037 1.196-3.037.018-2.02-.01-4.04-.15-6.046zm-5.86 6.002h-2.5v-3.79c0-1.29-.444-1.936-1.332-1.936-.967 0-1.45.717-1.45 2.147v1.89h-2.26v-1.89c0-1.43-.483-2.147-1.45-2.147-.888 0-1.332.647-1.332 1.936v3.79h-2.5v-4.524c0-1.222.37-2.19 1.11-2.905.753-.726 1.713-1.09 2.88-1.09 1.336 0 2.302.52 2.898 1.562l.334.59.333-.59c.596-1.04 1.562-1.562 2.898-1.562 1.167 0 2.127.364 2.88 1.09.74.715 1.11 1.683 1.11 2.905v4.524z"/></svg>
+            </a>
+
+            <a href="#" class="footer__social-link" aria-label="Bluesky">
+                <svg class="footer__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.415.056-.831.112-1.246.168-3.053.414-4.436 1.528-4.436 3.486 0 2.25 1.682 3.86 4.673 3.86 3.125 0 5.483-3.144 5.587-8.082.104 4.938 2.462 8.082 5.587 8.082 2.991 0 4.673-1.61 4.673-3.86 0-1.958-1.383-3.072-4.436-3.486-.415-.056-.831-.112-1.246-.168.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.789.624-6.479 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8Z"/></svg>
+            </a>
+        </div>
+
+        <!-- Zone légale -->
+        <div class="footer__legal">
+            <div class="footer__legal-links">
+                <a href="#" class="footer__legal-link">Mentions Légales</a>
+                <a href="#" class="footer__legal-link">CGU</a>
+                <a href="#" class="footer__legal-link">Confidentialité</a>
+            </div>
+            <p class="footer__copyright">© 2026 Aegis Bank. Tous droits réservés.</p>
+        </div>
+
+    </footer>
     
-    <section class="hero">
-        
-        <div class="hero__promo-card">
-            PROMOTIONNELLE CARD
-        </div>
+    <!-- Script d'interaction pour le menu burger -->
+    <script>
+        const burgerBtn = document.querySelector('.header__burger');
+        const mobileMenu = document.getElementById('mobileMenu');
 
-        <h1 class="hero__title">La banque éthique et transparente</h1>
-        
-        <p class="hero__description">
-            Gérez vos revenus de créateur en toute transparence, sans exploitation de vos données ni frais cachés.
-        </p>
-
-        <div class="hero__app-link">
-            CTA: Téléchargez l’app
-        </div>
-
-    </section>
-
-</main>
-
-<footer class="footer">
-    <span class="footer__text">SOCIAL LINKS</span>
-</footer>
-    
+        burgerBtn.addEventListener('click', () => {
+            burgerBtn.classList.toggle('is-active');
+            mobileMenu.classList.toggle('is-active');
+        });
+    </script>
 </body>
 </html>
